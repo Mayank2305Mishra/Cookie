@@ -1,5 +1,5 @@
 import { ID, ImageGravity } from "appwrite";
-import { account, databases, storage } from "../appwrite.config";
+import { databases, storage } from "../appwrite.config";
 
 
 export async function imgUpload(img : File) {
@@ -58,7 +58,7 @@ export async function createRecipe(recipe : NewRecipe) {
     const docID = ID.unique()
     const newRecipe = await databases.createDocument(
       process.env.NEXT_PUBLIC_DATABASE!,
-      process.env.NEXT_PUBLIC_STORAGE_ID!,
+      process.env.NEXT_PUBLIC_RECIPE_COLLECTION!,
       docID,
       {
         recipeId:docID,
@@ -67,7 +67,7 @@ export async function createRecipe(recipe : NewRecipe) {
         recipe: recipe.recipe ,
         tags: recipe.tags,
         calories: recipe.calorie,
-        imageUrl: 'https://plus.unsplash.com/premium_photo-1674327105076-36c4419864cf?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2FwcHVjY2lubyUyMGNvZmZlZXxlbnwwfHwwfHx8MA%3D%3D',
+        imageUrl: imgUrl,
         ingredients : ingredients
       }
     );

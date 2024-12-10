@@ -23,7 +23,7 @@ export const recipeSchema = z.object({
     name: z.string().min(5, { message: "Minimum 5 characters." }).max(2200, { message: "Maximum 2,200 caracters" }),
     file: z.custom<File[]>(),
     tags: z.enum(["Sweet","Spice","Salty","Tangy","Healthy","Cold"]),
-    recipe: z.string(),
+    recipe: z.string().min(5, { message: "Minimum 5 characters." }),
     calories: z.string(),
-    ingredients: z.string()
+    ingredients: z.string().min(5,{ message: "Minimum 5 characters." })
 });

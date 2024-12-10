@@ -28,8 +28,12 @@ import ImgUploader from "@/components/cookieUI/ImgUploader";
 import { Input } from "@/components/ui/input";
 import { ChefHat, Cookie } from "lucide-react";
 import { Models } from "appwrite";
+import Image from "next/image";
+import Link from "next/link";
+import toast, { Toaster } from "react-hot-toast";
 
-const Upload = ({post}:{post?: Models.Document;}) => {
+
+const Upload = ({ post }: { post?: Models.Document; }) => {
   const { user } = useAuthStore()
   const router = useRouter()
   const [loading, setloading] = useState(false)
@@ -51,12 +55,37 @@ const Upload = ({post}:{post?: Models.Document;}) => {
   });
   async function onSubmit(values: z.infer<typeof recipeSchema>) {
     setloading(true);
+    console.log(values);
+    try {
+
+      const recipeUpload = await createRecipe({
+        userId: user.userId,
+        name: values.name,
+        recipe: values.recipe,
+        file: values.file,
+        calorie: values.calories,
+        tags: values.tags,
+        ingredients: values.ingredients
+      })
+      toast.success("Recipe uploaded sucessfully")
+      setTimeout(() => {
+        router.push(`/recipe/${recipeUpload?.recipeId}`)
+      }, 1500);
+
+    } catch (error) {
+      console.error(error);
+
+    }finally{
+     setloading(false)
+    }
+
   }
 
 
   return (
     <section className="mt-10 p-2 flex flex-col">
-      <h1 className="text-20 font-bold flex text-white-1"><ChefHat className="h-14 w-14"/>  <b className="flex flex-col justify-center h-16 text-2xl px-1"> Create Recipe </b></h1>
+      <Toaster/>
+      <h1 className="text-20 font-bold flex text-white-1"><ChefHat className="h-14 w-14" />  <b className="flex flex-col justify-center h-16 text-2xl px-1"> Create Recipe </b></h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="mt-12 flex w-full flex-col">
           <div className="flex flex-col gap-[30px] border-b border-black-5 pb-10 ">
@@ -67,7 +96,7 @@ const Upload = ({post}:{post?: Models.Document;}) => {
                 <FormItem className="flex flex-col gap-2.5">
                   <FormLabel className="text-16 font-bold text-white-1">🌶️ Add a spice name</FormLabel>
                   <FormControl>
-                    <Input className="input-form" placeholder="Hazelnut Coffee" {...field} />
+                    <Input className="input-form" placeholder="Ex: Hazelnut Coffee" {...field} />
                   </FormControl>
                   <FormMessage className="text-red-500" />
                 </FormItem>
@@ -80,7 +109,7 @@ const Upload = ({post}:{post?: Models.Document;}) => {
                 <FormItem>
                   <FormLabel className="text-16 font-bold text-white-1">📷 Add Photo</FormLabel>
                   <FormControl>
-                    <ImgUploader 
+                    <ImgUploader
                       fieldChange={field.onChange}
                       mediaUrl={post?.imageUrl}
                     />
@@ -96,11 +125,11 @@ const Upload = ({post}:{post?: Models.Document;}) => {
                 <FormItem className="flex flex-col gap-2.5">
                   <FormLabel className="text-16 font-bold text-white-1">🍪 Add recipe</FormLabel>
                   <FormControl>
-                    <Textarea className="h-36 bg-black-4 rounded-xl border-none focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-cream-1 custom-scrollbar" placeholder="The magic lies in you..." {...field} />
+                    <Textarea className="h-36 bg-black-4 rounded-xl border-none focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-cream-1 custom-scrollbar" placeholder="Ex:  The magic lies in you..." {...field} />
                   </FormControl>
                   <FormMessage className="text-red-500" />
                 </FormItem>
-                
+
               )}
             />
             <FormField
@@ -110,25 +139,25 @@ const Upload = ({post}:{post?: Models.Document;}) => {
                 <FormItem className="flex flex-col gap-2.5">
                   <FormLabel className="text-16 font-bold text-white-1">🥕 Add ingredients (seperate by ',')</FormLabel>
                   <FormControl>
-                  <Input className="input-form" placeholder="100gms Coffee beans, 100ml milk, water..." {...field} />
+                    <Input className="input-form" placeholder="Ex:  100gms Coffee beans, 100ml milk, water..." {...field} />
                   </FormControl>
                   <FormMessage className="text-red-500" />
                 </FormItem>
-                
+
               )}
             />
             <FormField
               control={form.control}
-              name="ingredients"
+              name="calories"
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-2.5">
                   <FormLabel className="text-16 font-bold text-white-1"> 💪 Calories ( optional )</FormLabel>
                   <FormControl>
-                  <Input className="input-form" placeholder="600 calories per serving" {...field} />
+                    <Input className="input-form" placeholder="Ex:  600 calories per serving" {...field} />
                   </FormControl>
                   <FormMessage className="text-red-500" />
                 </FormItem>
-                
+
               )}
             />
             <FormField
@@ -141,8 +170,8 @@ const Upload = ({post}:{post?: Models.Document;}) => {
                   </FormLabel>
                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
-                      <SelectTrigger className="text-white-1 bg-black-4 ring-offset-cream-1"> 
-                        <SelectValue className="text-white-1" defaultValue={"Sweet"} placeholder="Select a verified email to display" />
+                      <SelectTrigger className="text-white-1 bg-black-4 ring-offset-cream-1">
+                        <SelectValue className="text-white-1" defaultValue={"Sweet"} placeholder="Ex:  Select a verified email to display" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent className="bg-black-1  ring-offset-cream-1 text-white-1 font-lg">
@@ -158,12 +187,30 @@ const Upload = ({post}:{post?: Models.Document;}) => {
                 </FormItem>
               )}
             />
-          </div>
-              <div className="mt-10 w-full">
-                <Button type="submit" className="text-16 w-full bg-cream-1 py-4 font-extrabold text-black-1 transition-all duration-500 hover:bg-black-2 hover:text-white-1">
-                    Upload Recipe
-                </Button>
+            <h1 className="text-16 font-bold text-white-1">🧁 Baked by :</h1>
+            <Link href={`/profile/${user?.userId}`} className="flex border border-black-4 shadow-black-5/20  shadow backdrop-blur-xl gap-3 p-3 rounded-md">
+              <div className="flex w-full items-center justify-between">
+                <div className='flex flex-row gap-3'>
+                  <img src={user?.avatar} className='rounded-full h-12 w-12' />
+                  <h1 className="text-16 pt-3 truncate font-semibold text-white-1">{user?.name}</h1>
+                </div>
               </div>
+            </Link>
+          </div>
+          <div className="mt-10 w-full">
+            <Button type="submit" className="text-16 w-full bg-cream-1 py-4 font-extrabold text-black-1 transition-all duration-500 hover:bg-black-2 hover:text-white-1">
+              {loading &&
+                <div className="flex">
+                  <Cookie className="animate-ping" />
+                  <h1 className="">Uploading..</h1>
+                  <Cookie className="animate-ping" />
+                </div>
+              }
+              {!loading &&
+                <h1>Upload Recipe</h1>
+              }
+            </Button>
+          </div>
         </form>
       </Form>
     </section>
