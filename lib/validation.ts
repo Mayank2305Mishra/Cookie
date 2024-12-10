@@ -19,16 +19,11 @@ export const signSchema = z.object({
         .string()
         .refine((phone)=>/^\+\d{10,15}$/.test(phone), "Invalid phone number")
 })
-export const phoneSchema = z.object({
-    phone: z
-        .string()
-        .refine((phone)=>/^\+\d{10,15}$/.test(phone), "Invalid phone number")
-})
-
-export const profileSchema = z.object({
-    name: z.string(),
-    email: z.string(),
-    phone: z
-        .string(),
-    bio: z.string()
-})
+export const recipeSchema = z.object({
+    name: z.string().min(5, { message: "Minimum 5 characters." }).max(2200, { message: "Maximum 2,200 caracters" }),
+    file: z.custom<File[]>(),
+    tags: z.enum(["Sweet","Spice","Salty","Tangy","Healthy","Cold"]),
+    recipe: z.string(),
+    calories: z.string(),
+    ingredients: z.string()
+});

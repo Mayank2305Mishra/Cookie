@@ -18,3 +18,14 @@ declare type User ={
     avatar : string;
     bio: string;
 }
+
+declare type NewRecipe = {
+    userId: string;
+    name:string;
+    recipe: string;
+    file: File[];
+    calorie?: string;
+    tags: enum;
+    ingredients?: string;
+  };
+  

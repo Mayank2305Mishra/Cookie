@@ -67,10 +67,6 @@ const LeftSidebar = () => {
           </Link>
         })}
       </nav>
-      <div className='p-2 text-xs '>
-      <h1>Baked by Mayank Mishra 🍪 </h1>
-      <h1 className='flex flex-row gap-2 py-1  '>Github : <Link className='px-2 py-0.5 bg-white-1/30  rounded-xl' href={'https://github.com/Mayank2305Mishra'}>Mayank2305Mishra</Link> </h1>
-      </div>
     </section>
   )
 }

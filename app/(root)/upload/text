@@ -1,0 +1,141 @@
+<Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col gap-3 w-full  max-w-5xl">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-white-1 text-lg ">Name your Recipe</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Hazelnut Coffee..." type="text" className="input-form" {...field} />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="file"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-white-1 text-lg ">Add Photo</FormLabel>
+                  <FormControl>
+                    <ImgUploader 
+
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="recipe"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-white-1 text-lg ">Add your recipe</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder=""
+                      className="h-36 bg-black-4 rounded-xl border-none focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-cream-1 custom-scrollbar"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="tags"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-white-1 text-lg ">
+                    Add Tag
+                  </FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger className="text-white-1 bg-black-4 ring-offset-cream-1"> 
+                        <SelectValue className="text-white-1" defaultValue={"Sweet"} placeholder="Select a verified email to display" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent className="bg-black-1  ring-offset-cream-1 text-white-1 font-lg">
+                      <SelectItem className="focus:bg-" value="Sweet">Sweet</SelectItem>
+                      <SelectItem className="focus:bg-" value="Spice">Spice</SelectItem>
+                      <SelectItem className="focus:bg-" value="Cold">Cold</SelectItem>
+                      <SelectItem className="focus:bg-" value="Salty">Salty</SelectItem>
+                      <SelectItem className="focus:bg-" value="Tangy">Tangy</SelectItem>
+                      <SelectItem className="focus:bg-" value="Healthy">Healthy</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+
+            <div className="flex gap-4 items-center justify-end">
+            </div>
+          </form>
+        </Form>
+
+
+
+
+
+
+////
+
+
+
+"use client"
+import { useAuthStore } from "@/app/store"
+import "../globals.css";
+import Image from "next/image";
+import LeftSidebar from "@/components/cookieUI/LeftSideBar";
+import RightSidebar from "@/components/cookieUI/RightSidebar";
+import { Toaster } from "@/components/ui/toaster";
+import MobileNav from "@/components/cookieUI/MobileNav";
+import Logo from '../assets/image.png'
+import { useEffect } from "react"
+import PodcastPlayer from "@/components/cookieUI/PodcastPlayer";
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  const { checkAuthUser} = useAuthStore()
+  useEffect(() => {
+    checkAuthUser()
+  }, [])
+  return (
+    <div className="text-white-1 relative flex flex-col ">
+      <main className="relative flex bg-black-3">
+        <LeftSidebar />
+        <section className="flex flex-1 flex-col px-4 sm:px-14">
+          <div className="mx-auto flex w-full max-w-5xl flex-col max-sm:px-4">
+            <div className=" flex h-16 items-center justify-between md:hidden">
+              <Image
+                src={Logo}
+                width={30}
+                height={30}
+                alt="menu icon"
+              />
+              <MobileNav/>
+            </div>
+            <div className="flex h-dvh  overflow-y-scroll  flex-col md:pb-14">
+              <Toaster />
+              {children}
+            </div>
+          </div>
+        </section>
+        <RightSidebar/>
+      </main>
+      
+    </div>
+  );
+}

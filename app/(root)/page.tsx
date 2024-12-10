@@ -1,10 +1,10 @@
 "use client"
-import { useAuthContext } from "@/context/AuthContext";
+import { useAuthStore } from "../store";
 
 
 
 const Home = () => {
-  const {user} = useAuthContext()
+  const {user} = useAuthStore()
   
   return (
     <div className="py-4">

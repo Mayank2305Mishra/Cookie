@@ -6,13 +6,15 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet"
 import { cn } from "@/lib/utils"
-import { Album, Cookie, Home, Pizza, ScanBarcode, Upload } from "lucide-react"
+import { Album, Cookie, Home, MoveRight, Pizza, ScanBarcode, Upload } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import Logo from '@/app/assets/image.png'
+import { useAuthStore } from "@/app/store"
 
 const MobileNav = () => {
+    const {user} = useAuthStore()
     const pathname = usePathname();
     const sidebarLinks = [
         {
@@ -75,6 +77,17 @@ const MobileNav = () => {
                                     </Link>
                                     </SheetClose>
                                 })}
+                                {
+                                    <Link href={`/profile/${user?.userId}`} className="flex border border-black-4 shadow-black-5/20  shadow backdrop-blur-xl gap-3 p-3 rounded-md">
+                                        <div className="flex w-full items-center justify-between">
+                                            <div className='flex flex-row gap-3'>
+                                                <img src={user?.avatar} className='rounded-full h-12 w-12' />
+                                                <h1 className="text-16 pt-3 truncate font-semibold text-white-1">{user?.name}</h1>
+                                            </div>
+                                            <MoveRight />
+                                        </div>
+                                    </Link>
+                                }
                                 {
                                     <div className='p-2 text-xs '>
                                         <h1>Baked by Mayank Mishra 🍪 </h1>

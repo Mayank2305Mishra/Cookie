@@ -18,7 +18,7 @@ export const signUp = async ({ password, email, name, phone }: SignupParams) => 
         const newUser = await databases.createDocument(
             process.env.NEXT_PUBLIC_DATABASE!,
             process.env.NEXT_PUBLIC_USER_COLLECTION!,
-            ID.unique(),
+            newAccount.$id,
             {
                 userId: newAccount.$id,
                 email: email,
@@ -94,7 +94,12 @@ export async function emailExist(email: string) {
             process.env.NEXT_PUBLIC_USER_COLLECTION!,
             [Query.equal("email", email)]
         )
-        return data.total
+        if (data.total == 0){
+            return false
+        }
+        else{
+            return true
+        }
     } catch (error) {
         console.error('ERROR', error);
     }

@@ -10,7 +10,7 @@ import { emailExist, signUp } from "@/lib/actions/user.action";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Button } from "@/components/ui/button"; 
+import { Button } from "@/components/ui/button";
 import Header from '@/components/cookieUI/Header'
 import React from 'react'
 import CustomInput from "@/components/cookieUI/CustomInput";
@@ -45,20 +45,12 @@ const page = () => {
     setloading(true);
     try {
       const user = await signUp(values);
-      const DBcheck = await emailExist(values.email)
-      if(DBcheck && DBcheck > 0){
-        toast.error('Same user exists. Try to Login')
-        setTimeout(() => {
-          router.push('/login')
-        }, 1500);
-      }
       if (user !== undefined) {
         toast.success('Signup successful')
-        toast.custom((t:any) => (
+        toast.custom((t: any) => (
           <div
-            className={`${
-              t.visible ? 'animate-enter' : 'animate-leave'
-            } max-w-md w-full bg-dark-2 rounded-xl shadow-xl pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+            className={`${t.visible ? 'animate-enter' : 'animate-leave'
+              } max-w-md w-full bg-dark-2 rounded-xl shadow-xl pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
           >
             <div className="flex-1 w-0 p-4">
               <div className="flex items-start">
@@ -93,7 +85,14 @@ const page = () => {
           router.push('/')
         }, 1500);
       }
-      if(user == undefined){
+      if (user == undefined) {
+        const DBcheck = await emailExist(values.email)
+        if (DBcheck) {
+          toast.error('Same user exists. Try to Login')
+          setTimeout(() => {
+            router.push('/login')
+          }, 1500);
+        }
         toast.error("Same user exsits. Try to login.")
       }
     } catch (error) {
