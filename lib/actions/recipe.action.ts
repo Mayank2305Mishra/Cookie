@@ -49,11 +49,12 @@ export async function createRecipe(recipe : NewRecipe) {
     const img = await imgUpload(recipe.file[0])
     if(!img) throw Error;
 
-    const imgUrl = getimgUrl(img.$id)
+    const imgUrl = await getimgUrl(img.$id)
     if (!imgUrl) {
       await deleteImg(img.$id);
       throw Error;
     }
+    
     const ingredients = recipe.ingredients?.replace(/ /g, "").split(",") || [];
     const docID = ID.unique()
     const newRecipe = await databases.createDocument(
