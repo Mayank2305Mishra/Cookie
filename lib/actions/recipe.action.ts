@@ -99,3 +99,14 @@ export async function getRecipeById(recipeId: string) {
   }
   
 }
+export async function getAllRecipe(){
+  try {
+    const recipe = await databases.listDocuments(
+      process.env.NEXT_PUBLIC_DATABASE!,
+      process.env.NEXT_PUBLIC_RECIPE_COLLECTION!,
+  )
+  return recipe.documents 
+  } catch (error) {
+    return {name:"No recipe found 404"}
+  }
+}

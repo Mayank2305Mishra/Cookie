@@ -8,7 +8,7 @@ export const INITIAL_USER = {
     name: "",
     email: "",
     phone:"",
-    avatar:"",
+    avatar:"https://api.dicebear.com/6.x/micah/png?seed=MM&backgroundColor=b6e3f4,c0aede,d1d4f9",
     bio:""
   };
   
