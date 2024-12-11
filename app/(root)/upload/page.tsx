@@ -67,10 +67,12 @@ const Upload = ({ post }: { post?: Models.Document; }) => {
         tags: values.tags,
         ingredients: values.ingredients
       })
+      if(recipeUpload){
       toast.success("Recipe uploaded sucessfully")
+      }
       setTimeout(() => {
-        router.push(`/recipe/${recipeUpload?.recipeId}`)
-      }, 1500);
+        router.push(`/recipe/${recipeUpload?.$id}`)
+      }, 2500);
 
     } catch (error) {
       console.error(error);
