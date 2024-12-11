@@ -37,11 +37,6 @@ const Upload = ({ post }: { post?: Models.Document; }) => {
   const { user } = useAuthStore()
   const router = useRouter()
   const [loading, setloading] = useState(false)
-  async function createCoffee() {
-    console.log(user?.userId);
-    //const rec = await createRecipe({ name: 'Coffee', userId: user?.userId, recipe: 'Make some coffe', file: '', calorie: '200', tags: 'Sweet', ingredients: 'Milk, coffee , water sugar' })
-    //console.log(rec);
-  }
   const form = useForm<z.infer<typeof recipeSchema>>({
     resolver: zodResolver(recipeSchema),
     defaultValues: {
@@ -50,12 +45,12 @@ const Upload = ({ post }: { post?: Models.Document; }) => {
       file: [],
       calories: "",
       tags: "Sweet",
+      type:"Veg",
       ingredients: "",
     },
   });
   async function onSubmit(values: z.infer<typeof recipeSchema>) {
     setloading(true);
-    console.log(values);
     try {
 
       const recipeUpload = await createRecipe({
@@ -65,7 +60,8 @@ const Upload = ({ post }: { post?: Models.Document; }) => {
         file: values.file,
         calorie: values.calories,
         tags: values.tags,
-        ingredients: values.ingredients
+        ingredients: values.ingredients,
+        type: values.type,
       })
       if(recipeUpload){
       toast.success("Recipe uploaded sucessfully")
@@ -184,6 +180,31 @@ const Upload = ({ post }: { post?: Models.Document; }) => {
                       <SelectItem className="focus:bg-cream-1 focus:text-black-1" value="Salty">Salty</SelectItem>
                       <SelectItem className="focus:bg-cream-1 focus:text-black-1" value="Tangy">Tangy</SelectItem>
                       <SelectItem className="focus:bg-cream-1 focus:text-black-1" value="Healthy">Healthy</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage className="text-red-500" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="type"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-16 font-bold text-white-1">
+                    🟢 Add type
+                  </FormLabel>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger className="text-white-1 bg-black-4 ring-offset-cream-1">
+                        <SelectValue className="text-white-1" defaultValue={"Veg"} placeholder="Ex:" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent className="bg-black-1  ring-offset-cream-1 text-white-1 font-lg">
+                      <SelectItem className="focus:bg-cream-1 focus:text-black-1" value="Veg">🟢 Veg</SelectItem>
+                      <SelectItem className="focus:bg-cream-1 focus:text-black-1" value="Non-Veg">🔴 Non-Veg</SelectItem>
+                      <SelectItem className="focus:bg-cream-1 focus:text-black-1" value="Egg">🟡 Egg</SelectItem>
+                      <SelectItem className="focus:bg-cream-1 focus:text-black-1" value="Vegan">🔵 Vegan</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage className="text-red-500" />

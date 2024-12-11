@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import { getCurrentAccount } from '@/lib/actions/user.action';
 import { persist } from "zustand/middleware";
+import { User } from '@/types';
 
 export const INITIAL_USER = {
     userId: "",

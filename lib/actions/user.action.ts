@@ -1,6 +1,7 @@
 import { ID, Query } from "appwrite";
-import {  databases, account } from "../appwrite.config";
+import { databases, account } from "../appwrite.config";
 import { users } from "./user.server";
+import { SignupParams } from "@/types";
 
 export const signUp = async ({ password, email, name, phone }: SignupParams) => {
     try {
@@ -94,10 +95,10 @@ export async function emailExist(email: string) {
             process.env.NEXT_PUBLIC_USER_COLLECTION!,
             [Query.equal("email", email)]
         )
-        if (data.total == 0){
+        if (data.total == 0) {
             return false
         }
-        else{
+        else {
             return true
         }
     } catch (error) {
@@ -139,13 +140,31 @@ export async function phoneLogin(phone: string) {
         return error
     }
 }
-export async function verifySecret({userId,password}:{userId:string, password:string}){
+export async function verifySecret({ userId, password }: { userId: string, password: string }) {
     try {
         const session = await account.createSession(userId, password);
         return session
     } catch (error) {
-        console.error('ERROR',error);
+        console.error('ERROR', error);
     }
 
+}
+
+export async function getUserById(uid: string) {
+    try {
+            const data = await databases.listDocuments(
+            process.env.NEXT_PUBLIC_DATABASE!,
+            process.env.NEXT_PUBLIC_USER_COLLECTION!,
+            [Query.equal("$id", uid)]
+        )
+        if (data.total == 0) {
+            return {name:"",avatar:""}
+        }
+        else {
+            return data.documents[0]
+        }
+    } catch (error) {
+        console.error('ERROR', error);
+    }
 }
 

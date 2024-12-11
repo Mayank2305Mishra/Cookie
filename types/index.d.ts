@@ -1,3 +1,5 @@
+import { EnumLike } from "zod";
+
 declare type SignupParams = {
     name: string;
     email: string;
@@ -26,6 +28,7 @@ declare type NewRecipe = {
     file: File[];
     calorie?: string;
     tags: enum;
+    type: enum;
     ingredients?: string;
   };
   

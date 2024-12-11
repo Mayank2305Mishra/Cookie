@@ -1,5 +1,6 @@
-import { ID, ImageGravity } from "appwrite";
+import { ID, ImageGravity, Query } from "appwrite";
 import { databases, storage } from "../appwrite.config";
+import { NewRecipe } from "@/types";
 
 
 export async function imgUpload(img : File) {
@@ -55,7 +56,7 @@ export async function createRecipe(recipe : NewRecipe) {
       throw Error;
     }
     
-    const ingredients = recipe.ingredients?.replace(/ /g, "").split(",") || [];
+    const ingredients = recipe.ingredients?.split(",") || [];
     const docID = ID.unique()
     const newRecipe = await databases.createDocument(
       process.env.NEXT_PUBLIC_DATABASE!,
@@ -69,7 +70,8 @@ export async function createRecipe(recipe : NewRecipe) {
         tags: recipe.tags,
         calories: recipe.calorie,
         imageUrl: imgUrl,
-        ingredients : ingredients
+        ingredients : ingredients,
+        type: recipe.type,
       }
     );
 
@@ -82,4 +84,18 @@ export async function createRecipe(recipe : NewRecipe) {
   } catch (error) {
     console.error('ERROR',error)
   }
+}
+
+export async function getRecipeById(recipeId: string) {
+  try {
+    const recipe = await databases.listDocuments(
+      process.env.NEXT_PUBLIC_DATABASE!,
+      process.env.NEXT_PUBLIC_RECIPE_COLLECTION!,
+      [Query.equal("recipeId", recipeId)]
+  )
+  return recipe.total > 0 ? recipe.documents[0] : null
+  } catch (error) {
+    return {name:"No recipe found 404"}
+  }
+  
 }
