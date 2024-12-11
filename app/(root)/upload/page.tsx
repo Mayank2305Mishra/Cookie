@@ -70,8 +70,9 @@ const Upload = ({ post }: { post?: Models.Document; }) => {
       if(recipeUpload){
       toast.success("Recipe uploaded sucessfully")
       }
+      console.log(recipeUpload)
       setTimeout(() => {
-        router.push(`/recipe/${recipeUpload?.$id}`)
+        //router.push(`/recipe/${recipeUpload?.$id}`)
       }, 2500);
 
     } catch (error) {
