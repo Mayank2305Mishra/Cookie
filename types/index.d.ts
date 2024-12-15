@@ -31,4 +31,11 @@ declare type NewRecipe = {
     type: enum;
     ingredients?: string;
   };
-  
+
+  declare type NewCookbook = {
+    userId: string;
+    name:string;
+    recipe: string[];
+    file: File[];
+    bio?: string;
+  };

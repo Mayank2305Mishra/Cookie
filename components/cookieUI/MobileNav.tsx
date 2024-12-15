@@ -30,10 +30,6 @@ const MobileNav = () => {
             label: 'Cook Book'
         },
         {
-            route: '/foodscan',
-            label: 'Food Scan'
-        },
-        {
             route: '/aibake',
             label: 'AI - Bake'
         }

@@ -1,6 +1,6 @@
 import { ID, ImageGravity, Query } from "appwrite";
 import { databases, storage } from "../appwrite.config";
-import { NewRecipe } from "@/types";
+import { NewCookbook, NewRecipe } from "@/types";
 
 
 export async function imgUpload(img : File) {
@@ -109,4 +109,43 @@ export async function getAllRecipe(){
   } catch (error) {
     return {name:"No recipe found 404"}
   }
+}
+
+export async function createCookbook(cookbook: NewCookbook) {
+  try {
+    const img = await imgUpload(cookbook.file[0])
+    if(!img) throw Error;
+
+    const imgUrl = await getimgUrl(img.$id)
+    if (!imgUrl) {
+      await deleteImg(img.$id);
+      throw Error;
+    }
+    const docID = ID.unique()
+    const newCookbook = await databases.createDocument(
+      process.env.NEXT_PUBLIC_DATABASE!,
+      process.env.NEXT_PUBLIC_COOKBOOK_COLLECTION!,
+      docID,
+      {
+        cookbookId:docID,
+        name:cookbook.name,
+        user: cookbook.userId ,
+        recipe: cookbook.recipe ,
+        imageUrl: imgUrl,
+        bio: cookbook.bio
+      }
+    );
+
+    if (!newCookbook) {
+      await deleteImg(img.$id);
+      throw Error;
+    }
+
+    return newCookbook;
+    
+  } catch (error) {
+    console.error('Error',error);
+    
+  }  
+  
 }

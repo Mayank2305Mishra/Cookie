@@ -26,10 +26,6 @@ const LeftSidebar = () => {
       label: 'Cook Book'
     },
     {
-      route: '/foodscan',
-      label: 'Food Scan'
-    },
-    {
       route: '/aibake',
       label: 'AI - Bake'
     }
@@ -56,9 +52,6 @@ const LeftSidebar = () => {
             }
             {route == '/cookbook' &&
               <Album />
-            }
-            {route == '/foodscan' &&
-              <ScanBarcode />
             }
             {route == '/aibake' &&
               <Cookie />

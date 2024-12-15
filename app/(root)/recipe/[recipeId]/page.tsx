@@ -50,7 +50,7 @@ const page = () => {
                     <div>
                         <h1 className='font-bold py-2 '>Ingredients</h1>
                         {data.ingredients.map((item)=>(
-                            <div className='p-2'>
+                            <div key={item} className='p-2'>
                                 <h1 className='capitalize  font-medium'>⚪ {item}</h1> 
                             </div>
                         )
