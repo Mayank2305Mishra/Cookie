@@ -189,3 +189,15 @@ export async function getCookbookById(cookbookId: string) {
   }
   
 }
+
+export async function getAllCookbook(){
+  try {
+    const recipe = await databases.listDocuments(
+      process.env.NEXT_PUBLIC_DATABASE!,
+      process.env.NEXT_PUBLIC_COOKBOOK_COLLECTION!,
+  )
+  return recipe.documents 
+  } catch (error) {
+    return {name:"No recipe found 404"}
+  }
+}
