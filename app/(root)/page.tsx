@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useAuthStore } from "../store";
 import { getAllRecipe  } from "@/lib/actions/recipe.action";
 import Link from "next/link";
-import { getCurrentAccount } from "@/lib/actions/user.action";
 
 
 const Home = () => {
