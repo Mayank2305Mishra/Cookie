@@ -17,6 +17,7 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "Cookie",
   description: "A social cookbook",
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
