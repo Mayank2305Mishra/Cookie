@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { getRecipeById } from '@/lib/actions/recipe.action'
 import { getUserById } from '@/lib/actions/user.action'
 import { CookieRecipe } from '@/types'
-import { GitBranchPlus } from 'lucide-react'
+import { Cookie, GitBranchPlus } from 'lucide-react'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
@@ -12,7 +12,6 @@ import React, { useEffect, useState } from 'react'
 const page = () => {
     const params = useParams<{ recipeId: string; }>()
     const recipeId = params.recipeId
-    const { user } = useAuthStore()
     const [data, setdata] = useState({ name: "", imageUrl: "none", chef: { name: " ", avatar: "none", userId: "" }, tags: "", type: "", recipe: "", ingredients: [''] })
     useEffect(() => {
         getRecipeById(recipeId).then((recipe: any) => {
@@ -21,6 +20,7 @@ const page = () => {
     }, [])
     return (
         <div className='flex flex-1 '>
+            {data.name !== '' &&
             <div className='mt-10 w-full'>
                 <div className="relative w-full h-64 rounded-3xl">
                     <img src={data.imageUrl} alt="Sample" className="rounded-3xl w-full h-full object-cover " />
@@ -43,7 +43,6 @@ const page = () => {
                 <div className='flex flex-col gap-4 p-4'>
                     <div className='flex flex-row justify-between'>
                         <h1 className='font-bold p-2'>Recipe</h1>
-                        <Link href='/customize' className='font-medium text-sm rounded-lg  border border-black-5 p-2 flex flex-row gap-2'><GitBranchPlus className='h-5 w-5' /> Customize</Link>
                     </div>
                     <div className=''>
                         {data.recipe}
@@ -92,6 +91,16 @@ const page = () => {
 
                 </div>
             </div>
+            }
+            {data.name == '' &&
+            <div className='w-full h-screen pt-20 flex flex-col justify-center text-center items-center'>
+                <h1 className='text-xs flex flex-row gap-4 '>
+                    <Cookie  className='animate-ping' />
+                    Loading
+                    <Cookie className='animate-ping'/>
+                </h1>
+            </div>
+            }
         </div>
     )
 }

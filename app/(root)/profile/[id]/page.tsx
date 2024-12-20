@@ -2,6 +2,7 @@
 import { getCookbookByUser, getRecipeByUser } from '@/lib/actions/recipe.action';
 import { getUserById } from '@/lib/actions/user.action';
 import { CookieCookbook, CookieRecipe, User } from '@/types';
+import { Cookie } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
@@ -23,10 +24,12 @@ const page = () => {
             setrecipe(data)
         })
     }, [])
-    //console.log(recipe);
+    console.log(user);
     return (
         <div className='flex flex-1 mt-20 flex-col gap-4'>
             <h1 className='text-2xl font-bold text-cream-1 '>Chef's menu</h1>
+            {user !== undefined &&  
+            <div>
             <div className='flex flex-row gap-4 '>
                 <img src={user?.avatar} alt="." className='rounded-full h-28 w-28' />
                 <div className='h-28 flex flex-col justify-center '>
@@ -66,6 +69,17 @@ const page = () => {
                 </div>
                 }
             </div>
+            </div> 
+            }
+            {user == undefined &&
+            <div className='w-full h-screen pt-10 flex flex-col justify-center text-center items-center'>
+                <h1 className='text-xs flex flex-row gap-4 '>
+                    <Cookie  className='animate-ping' />
+                    Loading
+                    <Cookie className='animate-ping'/>
+                </h1>
+            </div>
+            }
         </div>
     )
 }

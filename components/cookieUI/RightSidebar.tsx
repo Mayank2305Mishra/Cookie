@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { MoveRight } from 'lucide-react';
+import { Cookie, MoveRight } from 'lucide-react';
 import { useAuthStore } from "@/app/store"
 import { CookieCookbook, CookieRecipe } from '@/types';
 import { getTopRecipe } from '@/lib/actions/recipe.action';
@@ -33,6 +33,7 @@ const RightSidebar = () => {
       <section className="flex flex-col gap-8 pt-12">
         <div className="flex flex-col gap-6">
           <h1 className='text-lg text-gray-400 font-semibold'>Top recipe of today</h1>
+          {recipe !== undefined && 
           <div className='flex flex-col gap-4'>
             <Link key={recipe?.recipeId} href={`/recipe/${recipe?.recipeId}`} className="relative h-48 rounded-3xl">
               <img src={recipe?.imageUrl} alt="Sample" className="rounded-3xl w-full h-full object-cover " />
@@ -49,6 +50,16 @@ const RightSidebar = () => {
               </div>
             </Link>
           </div>
+          }
+          {recipe == undefined &&
+            <div className='w-full h-full pt-10 flex flex-col justify-center text-center items-center'>
+                <h1 className='text-xs flex flex-row gap-4 '>
+                    <Cookie  className='animate-ping' />
+                    Loading
+                    <Cookie className='animate-ping'/>
+                </h1>
+            </div>
+            }
         </div>
       </section>
     </section>

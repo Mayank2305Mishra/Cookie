@@ -5,6 +5,7 @@ import { getAllCookbook, getAllRecipe, getRecipeTag, getRecipeType, getTopCookbo
 import Link from "next/link";
 import { CookieCookbook, CookieRecipe } from "@/types";
 import { Button } from "@/components/ui/button";
+import { Cookie } from "lucide-react";
 
 
 const Home = () => {
@@ -49,6 +50,8 @@ const Home = () => {
   }, [])
   return (
     <div className="py-4">
+      {user.name !== '' && 
+      <div>
       <h1 className="text-xl text-gray-400 ">Hello</h1>
       <h1 className="text-xl ">Chef <b className="text-cream-1"> {user?.name} </b></h1>
       <br />
@@ -98,6 +101,17 @@ const Home = () => {
         ))}
         </div>
       </div>
+      </div> 
+      }
+      {user.name == '' &&
+            <div className='w-full h-screen pt-20 flex flex-col justify-center text-center items-center'>
+                <h1 className='text-xs flex flex-row gap-4 '>
+                    <Cookie  className='animate-ping' />
+                    Loading
+                    <Cookie className='animate-ping'/>
+                </h1>
+            </div>
+            }
     </div>
   );
 };

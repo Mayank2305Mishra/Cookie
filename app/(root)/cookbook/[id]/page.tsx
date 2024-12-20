@@ -1,6 +1,7 @@
 'use client'
 import { getCookbookById } from '@/lib/actions/recipe.action';
 import { CookieCookbook } from '@/types';
+import { Cookie } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
@@ -17,6 +18,7 @@ const page = () => {
 
     return (
         <div className='flex flex-1 flex-col '>
+            {cookbook !== undefined &&
             <div className='w-full mt-10 flex flex-col gap-4 '>
                 <div className="relative w-full h-64 rounded-3xl">
                     <img src={cookbook?.imageUrl} alt="Sample" className="rounded-3xl w-full h-full object-cover " />
@@ -56,6 +58,16 @@ const page = () => {
                 <br />
                 <br />
             </div>
+            }
+            {cookbook == undefined &&
+            <div className='w-full h-screen pt-20 flex flex-col justify-center text-center items-center'>
+                <h1 className='text-xs flex flex-row gap-4 '>
+                    <Cookie  className='animate-ping' />
+                    Loading
+                    <Cookie className='animate-ping'/>
+                </h1>
+            </div>
+            }
         </div>
     )
 }
