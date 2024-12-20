@@ -44,7 +44,6 @@ export async function deleteImg(imgId: string) {
   }
 }
 
-
 export async function createRecipe(recipe : NewRecipe) {
   try {
     const img = await imgUpload(recipe.file[0])
@@ -147,5 +146,46 @@ export async function createCookbook(cookbook: NewCookbook) {
     console.error('Error',error);
     
   }  
+  
+}
+
+export async function getCookbookByUser(uid: string) {
+  try {
+    const recipe = await databases.listDocuments(
+      process.env.NEXT_PUBLIC_DATABASE!,
+      process.env.NEXT_PUBLIC_COOKBOOK_COLLECTION!,
+      [Query.equal("user", uid)]
+  )
+  return recipe.total > 0 ? recipe.documents : null
+  } catch (error) {
+    return {name:"No recipe found 404"}
+  }
+  
+}
+export async function getRecipeByUser(uid: string) {
+  try {
+    const recipe = await databases.listDocuments(
+      process.env.NEXT_PUBLIC_DATABASE!,
+      process.env.NEXT_PUBLIC_RECIPE_COLLECTION!,
+      [Query.equal("chef", uid)]
+  )
+  return recipe.total > 0 ? recipe.documents : null
+  } catch (error) {
+    return {name:"No recipe found 404"}
+  }
+  
+}
+
+export async function getCookbookById(cookbookId: string) {
+  try {
+    const recipe = await databases.listDocuments(
+      process.env.NEXT_PUBLIC_DATABASE!,
+      process.env.NEXT_PUBLIC_COOKBOOK_COLLECTION!,
+      [Query.equal("cookbookId", cookbookId)]
+  )
+  return recipe.total > 0 ? recipe.documents[0] : null
+  } catch (error) {
+    return {name:"No recipe found 404"}
+  }
   
 }

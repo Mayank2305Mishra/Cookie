@@ -39,3 +39,22 @@ declare type NewRecipe = {
     file: File[];
     bio?: string;
   };
+  declare type CookieRecipe = {
+    recipeId: string;
+    recipe: string;
+    name: string;
+    imageUrl: string;
+    chef : User;
+    ingredients: string[],
+    tags : string;
+    type : string;
+    calories : string;
+  }
+  declare type CookieCookbook ={
+    cookbookId : string;
+    name: string;
+    imageUrl : string;
+    user: User;
+    bio: string;
+    recipe: CookieRecipe[]
+  }

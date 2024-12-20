@@ -28,18 +28,6 @@ const page = () => {
                     </div>
                 </div>
                 <div className='flex flex-col gap-4 p-4'>
-                    <div className='flex flex-col gap-2'>
-                        <h1 className=' font-bold'>Recipe by Chef</h1>
-                        <Link href={`/profile/${data.chef?.userId}`} className="flex border border-black-4 shadow-black-5/20  shadow backdrop-blur-xl gap-3 p-3 rounded-md">
-                            <div className="flex w-full items-center justify-between">
-                                <div className='flex flex-row gap-3'>
-                                    <img src={data.chef?.avatar} className='rounded-full h-12 w-12' />
-                                    <h1 className="text-16 pt-3 truncate font-semibold text-white-1">{data.chef?.name}</h1>
-                                </div>
-                                
-                            </div>
-                        </Link>
-                    </div>
                     <div className='flex flex-row justify-between'>
                         <h1 className='font-bold p-2'>Recipe</h1>
                         <Link href='/customize' className='font-medium text-sm rounded-lg  border border-black-5 p-2 flex flex-row gap-2'><GitBranchPlus className='h-5 w-5' /> Customize</Link>
