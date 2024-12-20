@@ -34,6 +34,7 @@ const page = () => {
                     <h1 className='text-xs text-gray-400 '>{user?.bio}</h1>
                 </div>
             </div>
+            {recipe &&
             <div className='flex flex-col gap-2 '>
                 <h1 className='py-2 text-lg font-bold'>Recipes uploaded</h1>
                 <div className='flex flex-wrap gap-3'>
@@ -47,10 +48,13 @@ const page = () => {
                     ))}
                 </div>
             </div>
+            }
             <div className='flex flex-col gap-2 '>
+                {coobook &&
+                <div>
                 <h1 className='py-2 text-lg font-bold'>Cookbooks uploaded</h1>
                 <div className='flex flex-wrap gap-3'>
-                    {coobook.map((books) => (
+                    {coobook && coobook.map((books) => (
                         <Link key={books.cookbookId} href={`/cookbook/${books.cookbookId}`} className="relative w-full md:w-52 h-48  rounded-3xl">
                             <img src={books.imageUrl} alt="Sample" className="rounded-3xl w-full h-full object-cover " />
                             <div className="absolute inset-0 p-2 rounded-3xl bg-gradient-to-b from-black-1/5 via-[#0000]/40  to-[#000000] ">
@@ -59,6 +63,8 @@ const page = () => {
                         </Link>
                     ))}
                 </div>
+                </div>
+                }
             </div>
         </div>
     )

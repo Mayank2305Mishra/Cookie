@@ -189,7 +189,6 @@ export async function getCookbookById(cookbookId: string) {
   }
   
 }
-
 export async function getAllCookbook(){
   try {
     const recipe = await databases.listDocuments(
@@ -200,4 +199,31 @@ export async function getAllCookbook(){
   } catch (error) {
     return {name:"No recipe found 404"}
   }
+}
+
+export async function getTopRecipe() {
+  try {
+    const recipe = await databases.listDocuments(
+      process.env.NEXT_PUBLIC_DATABASE!,
+      process.env.NEXT_PUBLIC_RECIPE_COLLECTION!,
+    )
+    const x = Math.floor((Math.random() * recipe.total) + 0)
+  return recipe.documents[x]
+  } catch (error) {
+    return {name:"No recipe found 404"}
+  }
+  
+}
+export async function getTopCookbook() {
+  try {
+    const recipe = await databases.listDocuments(
+      process.env.NEXT_PUBLIC_DATABASE!,
+      process.env.NEXT_PUBLIC_COOKBOOK_COLLECTION!,
+    )
+    const x = Math.floor((Math.random() * recipe.total) + 0)
+  return recipe.documents[x]
+  } catch (error) {
+    return {name:"No recipe found 404"}
+  }
+  
 }

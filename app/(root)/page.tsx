@@ -1,16 +1,21 @@
 "use client"
 import { useEffect, useState } from "react";
 import { useAuthStore } from "../store";
-import { getAllRecipe  } from "@/lib/actions/recipe.action";
+import { getAllRecipe, getTopCookbook  } from "@/lib/actions/recipe.action";
 import Link from "next/link";
+import { CookieCookbook, CookieRecipe } from "@/types";
 
 
 const Home = () => {
   const { user } = useAuthStore()
-  const [data, setdata] = useState([{name:"",imageUrl:"" , recipeId:""}])
+  const [data, setdata] = useState<CookieRecipe[]>([])
+  const [topbook, settopbook] = useState<CookieCookbook>()
   useEffect(() => {
     getAllRecipe().then((recipe: any) => {
       setdata(recipe)
+    })
+    getTopCookbook().then((data:any)=>{
+      settopbook(data)
     })
   }, [])
   return (
@@ -20,14 +25,7 @@ const Home = () => {
       <br />
       <br />
       <div className="flex flex-wrap gap-6 justify-center sm:justify-start ">
-        {data.map((recipe)=>(
-          <Link key={recipe.recipeId} href={`/recipe/${recipe.recipeId}`} className="relative w-full md:w-80 h-48 rounded-3xl">
-          <img src={recipe.imageUrl} alt="Sample" className="rounded-3xl w-full h-full object-cover " />
-          <div className="absolute inset-0 p-2 rounded-3xl bg-gradient-to-b from-black-1/5 via-[#0000]/40  to-[#000000] ">
-              <p className="text-white text-2xl font-bold w-full h-full flex flex-col justify-end p-4">{recipe.name}</p>
-          </div>
-      </Link>
-        ))}
+        
       </div>
     </div>
   );
