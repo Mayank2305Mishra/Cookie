@@ -252,3 +252,57 @@ export async function getRecipeTag(tag: string) {
     return {name:"No recipe found 404"}
   }
 }
+
+export async function getTagsTerm(term: string) {
+  try {
+    const recipe = await databases.listDocuments(
+      process.env.NEXT_PUBLIC_DATABASE!,
+      process.env.NEXT_PUBLIC_RECIPE_COLLECTION!,
+      [Query.contains("tags", term)]
+  )
+  return recipe.total > 0 ? recipe.documents : null
+  } catch (error) {
+    return {name:"No recipe found 404"}
+  }
+}
+
+export async function getTypeTerm(term: string) {
+  try {
+    const recipe = await databases.listDocuments(
+      process.env.NEXT_PUBLIC_DATABASE!,
+      process.env.NEXT_PUBLIC_RECIPE_COLLECTION!,
+      [Query.contains("type", term)]
+  )
+  return recipe.total > 0 ? recipe.documents : null
+  } catch (error) {
+    return {name:"No recipe found 404"}
+  }
+}
+
+export async function getIngredientsTerm(term: string) {
+  try {
+    const recipe = await databases.listDocuments(
+      process.env.NEXT_PUBLIC_DATABASE!,
+      process.env.NEXT_PUBLIC_RECIPE_COLLECTION!,
+      [Query.contains("ingredients", term)]
+  )
+  return recipe.total > 0 ? recipe.documents : null
+  } catch (error) {
+    return {name:"No recipe found 404"}
+  }
+}
+
+export async function getRecipeTerm(term: string) {
+  try {
+    const recipe = await databases.listDocuments(
+      process.env.NEXT_PUBLIC_DATABASE!,
+      process.env.NEXT_PUBLIC_RECIPE_COLLECTION!,
+      [Query.contains("recipe", term)]
+  )
+  return recipe.total > 0 ? recipe.documents : null
+  } catch (error) {
+    return {name:"No recipe found 404"}
+  }
+}
+
+
