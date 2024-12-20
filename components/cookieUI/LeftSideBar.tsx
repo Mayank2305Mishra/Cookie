@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import React from 'react'
-import { Album, Cookie, Github, Home,  ScanBarcode, Upload } from 'lucide-react';
+import { Album, Cookie, Github, Home, ScanBarcode, SearchIcon, Upload } from 'lucide-react';
 import { Button } from '../ui/button';
 import Logo from '@/app/assets/image.png'
 
@@ -26,8 +26,8 @@ const LeftSidebar = () => {
       label: 'Cook Book'
     },
     {
-      route: '/aibake',
-      label: 'AI - Bake'
+      route: '/search',
+      label: 'Search'
     }
   ]
   return (
@@ -47,19 +47,25 @@ const LeftSidebar = () => {
             {route == '/' &&
               <Home />
             }
-            {route=='/upload' &&
-              <Upload/>
+            {route == '/upload' &&
+              <Upload />
             }
             {route == '/cookbook' &&
               <Album />
             }
-            {route == '/aibake' &&
-              <Cookie />
+            {route == '/search' &&
+              <SearchIcon />
             }
             <p>{label}</p>
           </Link>
         })}
       </nav>
+      {
+        <div className='p-2 text-xs '>
+          <h1>Baked by Mayank Mishra 🍪 </h1>
+          <h1 className='flex flex-row gap-2 py-1  '>Github : <Link className='px-2 py-0.5 bg-white-1/30  rounded-xl' href={'https://github.com/Mayank2305Mishra'}>Mayank2305Mishra</Link> </h1>
+        </div>
+      }
     </section>
   )
 }

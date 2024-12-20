@@ -6,7 +6,7 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet"
 import { cn } from "@/lib/utils"
-import { Album, Cookie, Home, MoveRight, Pizza, ScanBarcode, Upload } from "lucide-react"
+import { Album, Cookie, Home, MoveRight, Pizza, ScanBarcode, SearchIcon, Upload } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -30,8 +30,8 @@ const MobileNav = () => {
             label: 'Cook Book'
         },
         {
-            route: '/aibake',
-            label: 'AI - Bake'
+            route: '/search',
+            label: 'Search'
         }
     ]
     return (
@@ -66,8 +66,8 @@ const MobileNav = () => {
                                         {route == '/foodscan' &&
                                             <ScanBarcode />
                                         }
-                                        {route == '/aibake' &&
-                                            <Cookie />
+                                        {route == '/search' &&
+                                            <SearchIcon />
                                         }
                                         <p>{label}</p>
                                     </Link>

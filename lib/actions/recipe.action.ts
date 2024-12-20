@@ -227,3 +227,28 @@ export async function getTopCookbook() {
   }
   
 }
+
+export async function getRecipeType(type: string) {
+  try {
+    const recipe = await databases.listDocuments(
+      process.env.NEXT_PUBLIC_DATABASE!,
+      process.env.NEXT_PUBLIC_RECIPE_COLLECTION!,
+      [Query.equal("type", type)]
+  )
+  return recipe.total > 0 ? recipe.documents : null
+  } catch (error) {
+    return {name:"No recipe found 404"}
+  }
+}
+export async function getRecipeTag(tag: string) {
+  try {
+    const recipe = await databases.listDocuments(
+      process.env.NEXT_PUBLIC_DATABASE!,
+      process.env.NEXT_PUBLIC_RECIPE_COLLECTION!,
+      [Query.equal("tags", tag)]
+  )
+  return recipe.total > 0 ? recipe.documents : null
+  } catch (error) {
+    return {name:"No recipe found 404"}
+  }
+}
