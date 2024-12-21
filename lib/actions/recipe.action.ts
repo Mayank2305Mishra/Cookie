@@ -305,4 +305,16 @@ export async function getRecipeTerm(term: string) {
   }
 }
 
+export async function getNameTerm(term: string) {
+  try {
+    const recipe = await databases.listDocuments(
+      process.env.NEXT_PUBLIC_DATABASE!,
+      process.env.NEXT_PUBLIC_RECIPE_COLLECTION!,
+      [Query.contains("name", term)]
+  )
+  return recipe.total > 0 ? recipe.documents : null
+  } catch (error) {
+    return {name:"No recipe found 404"}
+  }
+}
 
